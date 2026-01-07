@@ -1,0 +1,32 @@
+name: Build and Push Docker Image to ACR
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches: [ "main" ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Docker login to ACR
+      run: |
+        docker login ${{ secrets.ACR_LOGIN_SERVER }} \
+          -u ${{ secrets.ACR_USERNAME }} \
+          -p ${{ secrets.ACR_PASSWORD }}
+
+    - name: Build Docker image
+      run: |
+        docker build -t ${{ secrets.ACR_LOGIN_SERVER }}/nginx-aula:latest .
+
+    - name: Push Docker image
+      run: |
+        docker push ${{ secrets.ACR_LOGIN_SERVER }}/nginx-aula:latest
