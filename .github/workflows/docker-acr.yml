@@ -19,14 +19,14 @@ jobs:
 
     - name: Docker login to ACR
       run: |
-        docker login ${{ secrets.ACR_LOGIN_SERVER }} \
+        docker login acrdockeraulas123.azurecr.io \
           -u ${{ secrets.ACR_USERNAME }} \
           -p ${{ secrets.ACR_PASSWORD }}
 
     - name: Build Docker image
       run: |
-        docker build -t ${{ secrets.ACR_LOGIN_SERVER }}/nginx-aula:latest .
+        docker build -t acrdockeraulas123.azurecr.io/nginx-aula:latest .
 
     - name: Push Docker image
       run: |
-        docker push ${{ secrets.ACR_LOGIN_SERVER }}/nginx-aula:latest
+        docker push acrdockeraulas123.azurecr.io/nginx-aula:latest
